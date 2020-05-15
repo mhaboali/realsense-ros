@@ -36,15 +36,15 @@
   <arg name="pointcloud_texture_stream" default="RS2_STREAM_COLOR"/>
   <arg name="pointcloud_texture_index"  default="0"/>
 
-  <arg name="enable_sync"               default="false"/>
-  <arg name="align_depth"               default="false"/>
+  <arg name="enable_sync"               default="true"/>
+  <arg name="align_depth"               default="true"/>
 
   <arg name="filters"                   default="pointcloud"/>
   <arg name="clip_distance"             default="-2"/>
   <arg name="linear_accel_cov"          default="0.01"/>
   <arg name="initial_reset"             default="false"/>
-  <arg name="unite_imu_method"          default=""/>
-  <arg name="topic_odom_in"             default="odom_in"/>
+  <arg name="unite_imu_method"          default="linear_interpolation"/>
+  <arg name="topic_odom_in"             default=""/>
   <arg name="calib_odom_file"           default=""/>
   <arg name="publish_odom_tf"           default="true"/>
   <arg name="allow_no_texture_points"   default="false"/>
@@ -105,5 +105,11 @@
   <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find realsense2_description)/urdf/test_d435_camera.urdf.xacro' use_nominal_extrinsics:=false"/>
 
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find realsense2_description)/rviz/urdf.rviz" required="true"/>
+  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find realsense2_description)/rviz/urdf.rviz" required="true"/> -->
+  <node pkg="imu_filter_madgwick" type="imu_filter_node" name="ImuFilter">
+       <param name="use_mag" type="bool" value="false" />
+       <param name="publish_tf" type="bool" value="true" />
+       <param name="world_frame" type="string" value="enu" />
+       <remap from="/imu/data_raw" to="/camera/imu"/>
+   </node>
 </launch>

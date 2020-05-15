@@ -195,5 +195,6 @@ Processing enabled by this node:
     </group>
 
   </group>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_camera_link_broadcaster" args="0.0 0.0 0.0 0 0 0 base_link camera_link"/>
 
 </launch>
