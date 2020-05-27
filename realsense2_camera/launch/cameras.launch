@@ -3,4 +3,5 @@
       <arg name="serial_no_camera1" value="925122110327"/> 			<!-- Note: Replace with actual serial number (camera1 default: t265)-->
       <arg name="serial_no_camera2" value="845112071189"/> 			<!-- Note: Replace with actual serial number (camera2 default: d400)-->
     </include>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find realsense2_camera)/rviz/d400_and_t265.rviz" required="true" />
 </launch>
